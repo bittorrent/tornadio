@@ -142,11 +142,20 @@ class SocketRouterBase(RequestHandler):
         cls._route = (r"/(?P<resource>%s)%s/"
                       "(?P<protocol>%s)/?"
                       "(?P<session_id>[0-9a-zA-Z]*)/?"
-                      "(?P<protocol_init>\d*?)|(?P<xhr_path>\w*?)/?"
-                      "(?P<jsonp_index>\d*?)" % (resource,
+                      "(?P<protocol_init>\d*)/?"
+                      "(?P<jsonp_index>\d*)" % (resource,
                                                  extra_re,
                                                  proto_re),
                       cls)
+
+        # cls._route = (r"/(?P<resource>%s)%s/"
+        #               "(?P<protocol>%s)/?"
+        #               "(?P<session_id>[0-9a-zA-Z]*)/?"
+        #               "(?P<protocol_init>\d*?)|(?P<xhr_path>\w*?)/?"
+        #               "(?P<jsonp_index>\d*?)" % (resource,
+        #                                          extra_re,
+        #                                          proto_re),
+        #               cls)
 
 def get_router(handler, settings=None, resource='socket.io/*',
                io_loop=None, extra_re=None, extra_sep=None):

@@ -4,3 +4,5 @@
 *.*~
 pyenv
 #*#
+.AppleDouble/*
+*.egg-info*
