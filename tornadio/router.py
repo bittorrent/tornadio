@@ -141,7 +141,7 @@ class SocketRouterBase(RequestHandler):
 
         cls._route = (r"/(?P<resource>%s)%s/"
                       "(?P<protocol>%s)/?"
-                      "(?P<session_id>[0-9a-zA-Z]*)/?"
+                      "(?P<session_id>[0-9a-zA-Z]{32})?/?"
                       "(?P<protocol_init>\d*)/?"
                       "(?P<jsonp_index>\d*)" % (resource,
                                                  extra_re,
