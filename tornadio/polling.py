@@ -48,26 +48,29 @@ class TornadioPollingHandlerBase(RequestHandler):
                                                          router.request)
 
     def _execute(self, transforms, *args, **kwargs):
-        # Initialize session either by creating new one or
-        # getting it from container
-        if not self.session_id:
-            session_expiry = self.router.settings['session_expiry']
+        try:
+            # Initialize session either by creating new one or
+            # getting it from container
+            if not self.session_id:
+                session_expiry = self.router.settings['session_expiry']
 
-            self.session = self.router.sessions.create(
-                pollingsession.PollingSession,
-                session_expiry,
-                router=self.router,
-                args=args,
-                kwargs=kwargs)
-        else:
-            self.session = self.router.sessions.get(self.session_id)
+                self.session = self.router.sessions.create(
+                    pollingsession.PollingSession,
+                    session_expiry,
+                    router=self.router,
+                    args=args,
+                    kwargs=kwargs)
+            else:
+                self.session = self.router.sessions.get(self.session_id)
 
-            if self.session is None or self.session.is_closed:
-                # TODO: Send back disconnect message?
-                raise HTTPError(401, 'Invalid session')
+                if self.session is None or self.session.is_closed:
+                    # TODO: Send back disconnect message?
+                    raise HTTPError(401, 'Invalid session')
 
-        super(TornadioPollingHandlerBase, self)._execute(transforms,
-                                                         *args, **kwargs)
+            super(TornadioPollingHandlerBase, self)._execute(transforms,
+                                                             *args, **kwargs)
+        except Exception, e:
+            self._handle_request_exception(e)
 
     @asynchronous
     def get(self, *args, **kwargs):
