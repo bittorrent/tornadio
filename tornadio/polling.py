@@ -48,6 +48,7 @@ class TornadioPollingHandlerBase(RequestHandler):
                                                          router.request)
 
     def _execute(self, transforms, *args, **kwargs):
+        self._transforms = transforms
         try:
             # Initialize session either by creating new one or
             # getting it from container
