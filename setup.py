@@ -28,9 +28,8 @@ setup(
     license=license,
     description='Socket.io server implementation on top of Tornado framework',
     long_description=readme,
-    requires=['simplejson', 'tornado'],
+    requires=['simplejson'],
     install_requires=[
-        'simplejson >= 2.1.0',
-        'tornado >= 1.1.0'
+        'simplejson >= 2.1.0'
     ]
 )
